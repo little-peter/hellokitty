@@ -1,0 +1,37 @@
+#include<stdio.h>
+#include<windows.h>
+int main()
+{
+	int sumadd = 0;//1到10的和
+	int sumEve =0;//1-10之间偶数的和
+	int sumOdd = 0;//1-10之间奇数的和
+	int i;
+	i = 1;
+	while (i <= 10)
+	{
+		sumadd += i;
+		i++;
+	}
+	printf("1到10的和为：%d\n", sumadd);
+
+	i = 2;//程序能走到这说明此时i>10,重新给i赋值
+	while (i <= 10)
+	{
+		sumEve += i;
+		i += 2;
+	}
+	printf("1到10之间偶数的和为：%d\n", sumEve);
+
+	 i = 1;//程序能走到这说明此时i>10,重新给i赋值
+	while (i <= 10)
+	{
+		sumOdd += i;
+		i += 2;
+	}
+	
+	printf("1到10之间奇数的和为:%d\n", sumOdd);
+
+	system("pause");
+		
+	return 0;
+}
