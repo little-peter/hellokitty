@@ -1,0 +1,61 @@
+#include<stdio.h>//感觉代码可以改进
+
+#include<stdlib.h>
+#include<time.h>
+void menu()
+{
+	printf("***********************\n");
+	printf("******1：我要玩游戏****\n");
+	printf("******0：退出**********\n");
+	printf("***********************\n");
+}
+void game()
+{
+	int rand_num = rand() % 100 + 1;//[1,101)之间生成随机数
+	int input = 0;
+
+	while (1)
+	{
+		printf("请输入猜的数字>:\n");
+		scanf("%d\n", &input);
+		if (input > rand_num)
+		{
+			printf("猜大了\n");
+		}
+		else if (input < rand_num)
+		{
+			printf("猜小了\n");
+		}
+		else 
+		{
+			printf("猜对了\n");
+			break;
+		}
+	}
+}
+
+int main()
+{     
+	int input = 0;
+	srand((unsigned)time(NULL));
+	do{
+		 menu();
+		printf("请选择:\n");
+		scanf("%d",&input);
+		switch (input)
+		{
+		case 1:
+			game();
+			break;
+		case 0:
+			break;
+		default:
+			printf("输入错误\n");
+			break;
+		}
+		}while (input);
+
+
+
+		return 0;
+	}
