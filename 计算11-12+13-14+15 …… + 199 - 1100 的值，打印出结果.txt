@@ -1,0 +1,32 @@
+首先总结一下规律：
+1.每一项都是分数
+2.分子都为1，分母依次递增至100
+3.分母的奇数项为正，偶数项为负
+思路：
+1.定义一个sum
+2.创建一个循环，再判断是否是奇数，如果是奇数往sum上加，否则（偶数）往sum上 减
+3.打印sum
+思路有了,是不是很简单啊!那么下面就来实现代码吧!
+代码展示:
+#include <stdio.h>
+ #include <stdlib.h>
+  int main()
+    {
+         double  sum =0;         //最终的结果
+         int i =1;
+         for(i=1;i<101;i+=1)
+      {
+           if(i%2 ==1)           
+            {
+               sum+=1.0/i;        //奇数项，往sum上相加
+            }
+            else                      
+           {
+             sum-=1.0/i；       //偶数项，往sum上相减
+           }
+     }
+         printf("sum=%lf\n",sum);    //打印sum
+         system("pause");
+         return 0;
+     }
+     
