@@ -1,0 +1,32 @@
+#include<stdio.h>
+	void bubbleSort(int arr[],int len)//i代表比较的趟数
+	{	for (int i = 0; i<len - 1; i++)
+		{                                                                        //注意边界，还可再优化，当未交换时说明已排好序
+			for ( int j = 0; j<len - 1 - i; j++)//len-1-i,减少比较次数，提高代码效率
+			{
+				if (arr[j]>arr[j+1])
+					{ int tmp = arr[j];
+				arr[j] = arr[j + 1];
+				arr[j + 1] = tmp;}
+			}
+		}
+	}
+	void show(int arr[], int len)//此函数用来比较排序前后的值的情况
+	{
+		for (int i = 0; i<len; i++)
+		{
+			printf("%d ", arr[i]);
+		}
+		printf("\n");
+	}
+
+	int main()
+	{
+		int arr1[] = { 1, 23, 42, 12, 43, 14 };
+		int len = sizeof(arr1) / sizeof(arr1[0]);
+		show(arr1, len);//展示排序前
+		bubbleSort(arr1, len);
+		show(arr1, len);//展示排序后
+
+		return 0;
+	}
