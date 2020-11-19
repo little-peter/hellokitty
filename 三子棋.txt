@@ -1,0 +1,192 @@
+#define _CRT_SECURE_NO_WARNINGS 1//game。c
+#include"game.h"
+
+void initboard(char arr[row][col])
+{
+	memset(arr, ' ', col*row*sizeof(char));//将col*row*sizeof(char)这么多字节设为‘ ’; 
+
+}
+void print_borad(char arr[row][col])//打印棋盘
+{
+	int i = 0;
+	for (i = 0; i < row; i++)
+	{
+		printf(" %c | %c | %c \n", arr[i][0], arr[i][1], arr[i][2]);
+		if (i != row)
+		{
+			printf("---|---|---\n");
+		}
+	}
+}
+void player_move(char arr[row][col])//玩家下棋
+{
+	int x = 0;
+	int y = 0;
+	while (1)
+	{
+		scanf("%d%d", &x, &y);
+		if ((x >= 1) && (x <= row) && (y >= 1) && (y <= row) && arr[x - 1][y - 1] == ' ')
+		{
+			arr[x - 1][y - 1] = 'x';
+			break;
+		}
+		else
+		{
+			printf("坐标错误，重新输入\n");
+		}
+	}
+}
+void computer_move(char arr[row][col]) //电脑下棋
+{
+	while (1)//运用循环可以提供给电脑再次产生坐标的机会
+	{
+		int x = rand() % 3;//产生0到2的随机数，刚好对应数组arr的下标。
+		int y = rand() % 3;
+		if (arr[x][y] == ' ')//随机坐标没有被占用就可以赋值（下棋）
+		{
+			arr[x][y] = '0';
+			break;
+		}
+	}
+}
+char check_win(char arr[row][col])//检测不同的结果并返回不同的值
+{
+	int i = 0;
+	for (i = 0; i < row; i++)
+	{
+		if (arr[i][0] == arr[i][1] && arr[i][1] == arr[i][2] && arr[i][0] != ' ')//检测行是否相同
+		{
+			return arr[i][0];
+		}
+	}
+
+	for (i = 0; i < col; i++)//检测列是否相同
+	{
+		if (arr[0][i] == arr[1][i] && arr[1][i] == arr[2][i] && arr[0][i] != ' ')
+		{
+			return arr[0][i];
+		}
+	}
+
+	if (arr[0][0] == arr[1][1] && arr[1][1] == arr[2][2] && arr[0][0] != ' ')//检测对角线
+	{
+		return arr[0][0];
+	}
+
+	if (arr[0][2] == arr[1][1] && arr[1][1] == arr[2][0] && arr[0][2] != ' ')//检测对角线
+	{
+		return arr[0][2];
+	}
+
+	if (is_full(arr))//检测是否为平局
+	{
+		return 'q';
+	}
+	return ' ';//都没赢
+}
+int is_full(char arr[row][col])//检测棋盘是否满了
+{
+	int i = 0;
+	int j = 0;
+	for (i = 0; i < row; i++)
+	{
+		for (j = 0; j < col; j++)
+		{
+			if (arr[i][j] == ' ')
+			{
+				return 0;
+			}
+		}
+	}
+	return 1;
+}
+
+void menu()
+{
+	printf("***********************\n");
+	printf("*********1.play********\n");
+	printf("*********0.exit********\n");
+	printf("***********************\n");
+}
+//game.h
+#pragma once//防止头文件重复引用
+#define  row 3
+#define col 3
+#include<stdio.h>
+#include<windows.h>
+void initboard(char arr[row][col]);
+void print_borad(char arr[row][col]);//打印棋
+void menu();
+void player_move(char arr[row][col]);
+void  computer_move(char arr[row][col]);
+char check_win(char arr[row][col]);
+int is_full(char arr[row][col]);
+//.c
+#define _CRT_SECURE_NO_WARNINGS 1
+#include"game.h"
+#include<string.h>
+#include<time.h>
+
+
+void game()
+{
+	char arr[row][col];
+	int x = 0;
+	int y = 0;
+	char ret = 0;
+	initboard( arr);;//初始化棋盘
+	print_borad(arr);//打印棋盘
+	printf("\n");
+	while (1)
+	{
+		player_move(arr);//玩家下棋
+		printf("\n");
+		if ((ret = check_win(arr)) != ' ')//里面条件成立说明谁赢了或平局，那就跳出循环判断
+			break;
+		computer_move(arr);//电脑下棋
+		if ((ret = check_win(arr)) != ' ')//里面条件成立说明谁赢了或平局，那就跳出循环判断
+			break;
+		print_borad(arr);//打印出这次你和电脑的走位
+		printf("\n");
+	}
+	if (ret == 'x')
+	{
+		printf("玩家赢\n");
+	}
+	else if (ret == '0')
+	{
+		printf("电脑赢\n");
+	}
+	else if (ret == 'q')
+	{
+		printf("平局\n");
+	}
+	print_borad(arr);//打印出游戏结果
+}
+
+
+int main()
+{
+
+
+	srand((unsigned)time(NULL));//设置随机数生成器
+	int t = 0;
+	do
+	{
+		menu();
+		printf("请输入选项\n");
+		scanf("%d", &t);
+		switch (t)
+		{
+		case 1: game();
+			break;
+		case 0:exit(1);
+			break;
+		default:
+			printf("输入错误,重新输入\n");
+			break;
+		}
+	} while (1);
+	system("pause");
+	return 0;
+}
